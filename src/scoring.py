@@ -200,7 +200,7 @@ def check_transaction_fraud(
     """
     # Local import avoids a circular import between scoring.py and
     # history_store.py at module load time.
-    from src.history_store import get_account_history
+    from history_store import get_account_history
 
     txn = Transaction(
         sender_account=sender_account,
