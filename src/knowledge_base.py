@@ -3,6 +3,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_core.tools import tool
+from pathlib import Path
 
 
 from dotenv import load_dotenv
@@ -44,13 +45,16 @@ def load_or_build_vector_db() -> Chroma:
     vector_db = create_vector_db()
     if not vector_db._collection.count():
         print("No documents found in the vector database. Loading and processing documents...")
-        docs = load_data("data/knowledge_base.pdf")
+        file_path = "/home/arjunverma/Coding New/Fraud Investigation copilot/data/fraud_patterns.pdf"
+        docs = load_data(file_path)
         chunks = split_text_into_chunks(docs)
         add_documents(vector_db, chunks)
         print("Documents added to the vector database.")
     else:
         print("Database for RAG Initialized.")
     return vector_db
+
+_vector_db = load_or_build_vector_db()
 
 @tool
 def search_fraud_patterns(query: str, k: int = 3) -> str:
@@ -65,7 +69,7 @@ def search_fraud_patterns(query: str, k: int = 3) -> str:
     Returns:
         A list of relevant documents.
     """
-    retriever = retrieve_with_mmr(vector_db, k)
+    retriever = retrieve_with_mmr(_vector_db, k)
     results = retriever.invoke(query)
     
     return "\n\n".join([result.page_content for result in results])
