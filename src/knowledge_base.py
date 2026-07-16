@@ -40,7 +40,7 @@ def retrieve_with_mmr(vectorstore, k: int = 3):
 
 
 
-def load_or_build_index() -> Chroma:
+def load_or_build_vector_db() -> Chroma:
     vector_db = create_vector_db()
     if not vector_db._collection.count():
         print("No documents found in the vector database. Loading and processing documents...")

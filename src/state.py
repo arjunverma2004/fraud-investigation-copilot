@@ -1,4 +1,6 @@
-from typing import TypedDict
+from typing import TypedDict, Annotated
+from langgraph.graph.message import add_messages
+
 
 
 
@@ -11,6 +13,6 @@ class InvestigationState(TypedDict):
     investigation_report: str
     human_decision: str | None
     human_notes: str | None
-    messages: list                         
+    messages: Annotated[list, add_messages]                       
     iteration_count: int
     

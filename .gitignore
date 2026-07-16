@@ -2,4 +2,17 @@
 .env
 .gitattributes
 .excalidraw.svg
+src/complete_trace_tree2.json
+src/complete_trace_tree.json
+data/financial_fraud_detection_dataset.csv
+src/my_chroma_db
+src/financial_fraud_detection_dataset.csv
+src/complete_trace_tree.json
+src/complete_trace_tree2.json
 
+__pycache__/
+*.pyc
+src/my_chroma_db/
+src/financial_fraud_detection_dataset.csv
+src/complete_trace_tree.json
+src/complete_trace_tree2.json

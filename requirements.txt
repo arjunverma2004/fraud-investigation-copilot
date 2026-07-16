@@ -1,1 +1,9 @@
 scikit-learn==1.6.1
+langchain-chroma
+langchain
+langchain-google-genai
+langgraph
+joblib
+chroma
+langchain-community
+langchain-chroma

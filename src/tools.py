@@ -29,7 +29,7 @@ def get_account_history(account_id: str, role_hint: str = "unspecified") -> dict
         dict with the account's recent transactions and summary stats
         (total transaction count, average amount, distinct counterparties).
     """
-    from src.history_store import get_account_history as _get_history
+    from history_store import get_account_history as _get_history
 
     history_df = _get_history(account_id, limit=50)
 
