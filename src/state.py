@@ -15,5 +15,4 @@ class InvestigationState(TypedDict):
     human_notes: str | None
     messages: Annotated[list, add_messages]                       
     iteration_count: int
-    report: list
-    
+    recommendation: str | None

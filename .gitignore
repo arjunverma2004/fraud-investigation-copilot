@@ -16,3 +16,7 @@ src/my_chroma_db/
 src/financial_fraud_detection_dataset.csv
 src/complete_trace_tree.json
 src/complete_trace_tree2.json
+src/complete_trace_tree3.json
+db/checkpoints.db-shm
+db/checkpoints.db-wal
+db/checkpoints.db
