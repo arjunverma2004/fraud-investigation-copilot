@@ -1,0 +1,11 @@
+transaction_id,timestamp,sender_account,receiver_account,amount,transaction_type,merchant_category,location,device_used,is_fraud,fraud_type,time_since_last_transaction,spending_deviation_score,velocity_score,geo_anomaly_score,payment_channel,ip_address,device_hash
+T107720,2023-02-27T09:09:10.721286,ACC391250,ACC499875,50.8,withdrawal,online,Tokyo,mobile,true,card_not_present,-4435.604462710833,-1.18,16,0.51,ACH,207.94.248.163,D9978939
+T114513,2023-03-11T04:52:42.790807,ACC853799,ACC774781,1099.03,deposit,grocery,Berlin,atm,true,card_not_present,-543.43525301,0.18,8,0.47,UPI,34.66.126.237,D9225721
+T121111,2023-09-21T23:06:03.802962,ACC743015,ACC311170,18.73,transfer,retail,Berlin,atm,true,card_not_present,3339.160881518611,0.57,10,0.5,ACH,115.218.159.229,D6163373
+T124247,2023-03-23T18:47:07.370345,ACC693265,ACC304655,1057.66,deposit,other,Singapore,mobile,true,card_not_present,-5616.318211966667,-0.11,1,0.93,ACH,102.102.14.51,D1201766
+T124325,2023-03-01T15:29:39.072741,ACC773851,ACC321187,26.36,payment,other,Tokyo,pos,true,card_not_present,-2102.467518661111,-0.06,7,0.22,UPI,134.105.153.161,D6904335
+T124520,2023-04-24T23:44:08.763720,ACC626757,ACC947888,102.07,payment,other,Toronto,web,true,card_not_present,-2851.8945352422224,0.26,19,0.7,ACH,25.74.116.254,D9242726
+T125405,2023-02-05T22:25:08.811104,ACC786338,ACC311331,27.89,transfer,retail,Toronto,mobile,true,card_not_present,-5203.018068890833,-1.17,14,0.07,card,48.226.81.208,D2010266
+T125440,2023-04-09T04:49:44.869634,ACC690741,ACC953050,739.12,deposit,other,New York,atm,true,card_not_present,-948.7510591975,-0.35,6,0.54,wire_transfer,179.227.46.146,D4681011
+T125491,2023-08-16T01:35:40.826258,ACC846209,ACC908947,464.52,withdrawal,grocery,Tokyo,web,true,card_not_present,1465.842657756111,-2.32,12,0.88,UPI,20.40.43.171,D9750635
+T125541,2023-05-22T09:35:23.471331,ACC253498,ACC841586,182.69,payment,utilities,Berlin,atm,true,card_not_present,-3635.071391545,1.16,19,0.64,card,156.186.65.8,D2538452

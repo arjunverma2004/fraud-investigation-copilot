@@ -169,3 +169,19 @@ def get_account_feedback(account_id: str, limit: int = 5) -> list[dict]:
             (account_id, limit),
         ).fetchall()
     return [dict(row) for row in rows]
+
+def get_recent_transactions(limit: int = 100) -> list[dict]:
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT * FROM transactions ORDER BY timestamp DESC LIMIT ?", (limit,)
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+def get_pending_investigations() -> list[dict]:
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT * FROM transactions WHERE is_flagged = 1 "
+            "AND investigation_status IN ('none', 'pending') "
+            "ORDER BY timestamp DESC"
+        ).fetchall()
+    return [dict(r) for r in rows]
