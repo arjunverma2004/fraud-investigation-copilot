@@ -136,12 +136,16 @@ class DecisionRequest(BaseModel):
     notes: str = ""
 
 
+def run_resume(transaction_id: str, decision: str, notes: str):
+    config = {"configurable": {"thread_id": transaction_id}}
+    try:
+        graph.invoke(Command(resume={"decision": decision, "notes": notes}), config=config)
+        print(f"[decision] {transaction_id} resumed successfully with decision={decision}")
+    except Exception as e:
+        print(f"[decision] {transaction_id} FAILED to resume: {e}")
+
+
 @app.post("/investigations/{transaction_id}/decision")
 def submit_decision(transaction_id: str, req: DecisionRequest):
-    config = {"configurable": {"thread_id": transaction_id}}
-    executor.submit(
-        graph.invoke,
-        Command(resume={"decision": req.decision, "notes": req.notes}),
-        config=config,
-    )
+    executor.submit(run_resume, transaction_id, req.decision, req.notes)
     return {"status": "submitted"}
