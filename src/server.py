@@ -54,10 +54,11 @@ def stream_csv(path: str, delay_seconds: float, limit: int | None):
     if limit:
         lazy_df = lazy_df.limit(limit)
 
-    with _stream_lock:
-        _streaming["active"] = True
+    # Note: State setting (_streaming["active"] = True) was removed from here 
+    # and moved to the start_stream endpoint to fix the race condition.
 
-    for row in lazy_df.collect().iter_rows(named=True):
+    # FIX: Use iter_dicts() so row can be unpacked as a dictionary
+    for row in lazy_df.collect().iter_dicts():
         if not _streaming["active"]:
             break
         txn = {**row, "transaction_id": str(uuid.uuid4())}
@@ -88,8 +89,14 @@ class StreamRequest(BaseModel):
 
 @app.post("/stream/start")
 def start_stream(req: StreamRequest):
-    if _streaming["active"]:
-        return {"status": "already_running"}
+    # FIX: Wrap the check and assignment in the thread lock
+    with _stream_lock:
+        if _streaming["active"]:
+            return {"status": "already_running"}
+        
+        # FIX: Synchronously set the active flag to True before thread creation
+        _streaming["active"] = True
+
     threading.Thread(
         target=stream_csv,
         args=(req.csv_path, req.delay_seconds, req.limit),

@@ -7,3 +7,6 @@ joblib
 chroma
 langchain-community
 langchain-chroma
+streamlit
+plotly
+polars
