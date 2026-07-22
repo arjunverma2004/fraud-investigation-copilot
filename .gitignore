@@ -21,4 +21,4 @@ src/complete_trace_tree4.json
 db/checkpoints.db-shm
 db/checkpoints.db-wal
 db/checkpoints.db
-my_chroma_db/
+my_chroma_db/.env
