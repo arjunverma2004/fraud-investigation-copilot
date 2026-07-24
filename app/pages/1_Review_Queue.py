@@ -28,7 +28,6 @@ with list_col:
         label = f"${txn['amount']:.2f} · {txn['sender_account']}"
         btn_type = "primary" if is_selected else "secondary"
         if st.button(label, key=f"select_{txn['transaction_id']}", use_container_width=True, type=btn_type):
-            st.caption(f"DEBUG: selected={st.session_state.selected_txn!r}")
             st.session_state.selected_txn = txn["transaction_id"]
             st.rerun()
         st.markdown(risk_badge(txn.get("fraud_probability")), unsafe_allow_html=True)

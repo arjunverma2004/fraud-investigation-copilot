@@ -35,7 +35,7 @@ load_dotenv()
 # LLM setup
 # ---------------------------------------------------------------------
 model = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash-lite",
+    model="gemini-3.1-flash-lite",
     temperature=0.1,
     timeout=45,
     max_output_tokens=8192,
@@ -292,7 +292,19 @@ def build_graph():
         {"investigate_node": "investigate_node", END: END},
     )
 
-    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
+    # timeout=30 makes concurrent writers wait for the lock instead of
+    # raising "database is locked" immediately. SqliteSaver already
+    # serializes access to this connection internally via its own
+    # threading.Lock (checked its source directly), so ONE shared
+    # compiled graph using ONE connection is the correct, supported
+    # pattern — not a per-request connection. Recompiling the graph and
+    # opening a fresh SqliteSaver.from_conn_string() on every single
+    # transaction (as a previous version of this file did) means every
+    # worker thread hits the same SQLite file with its own unmanaged
+    # connection simultaneously, which is what was actually causing the
+    # "database is locked" failures right after score_node.
+    conn = sqlite3.connect(DB_PATH, check_same_thread=False, timeout=30)
+    conn.execute("PRAGMA journal_mode=WAL")
     checkpointer = SqliteSaver(conn)
     return builder.compile(checkpointer=checkpointer)
 

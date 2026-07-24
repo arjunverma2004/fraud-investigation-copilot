@@ -68,3 +68,9 @@ if not df.empty:
     st.dataframe(display_df, use_container_width=True, height=420, hide_index=True)
 else:
     st.info("No transactions yet — start the stream above.")
+
+# Auto-refresh while a stream is running so the feed updates live,
+# instead of only refreshing on the next manual interaction.
+if st.session_state.stream_running:
+    time.sleep(2)
+    st.rerun()

@@ -29,8 +29,14 @@ def get_connection():
     thread-safe by default, and Streamlit/FastAPI both run handlers on
     different threads, so a shared connection would eventually corrupt
     state under concurrent requests.
+
+    timeout=30 + WAL mode: up to CONCURRENCY worker threads write here
+    concurrently, while the dashboard polls this same file for reads
+    every couple seconds — without this, concurrent access reliably
+    produces "database is locked" errors under any real load.
     """
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=30)
+    conn.execute("PRAGMA journal_mode=WAL")
     conn.row_factory = sqlite3.Row
     try:
         yield conn
